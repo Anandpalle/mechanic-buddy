@@ -1,0 +1,5 @@
+.git
+mechanic-buddy-backend/target/
+mechanic-buddy-frontend/node_modules/
+mechanic-buddy-frontend/dist/
+*.log

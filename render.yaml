@@ -1,0 +1,25 @@
+services:
+  # Spring Boot Backend Web Service
+  - type: web
+    name: mechanic-buddy-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    region: singapore
+    envVars:
+      - key: PORT
+        value: 8080
+
+  # React Frontend Static Site
+  - type: web
+    name: mechanic-buddy-frontend
+    runtime: static
+    buildCommand: cd mechanic-buddy-frontend && npm install && npm run build
+    staticPublishPath: ./mechanic-buddy-frontend/dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        fromService:
+          type: web
+          name: mechanic-buddy-backend
+          property: host
