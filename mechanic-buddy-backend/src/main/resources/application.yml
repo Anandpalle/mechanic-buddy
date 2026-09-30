@@ -1,0 +1,56 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mechanic-buddy-backend
+
+  # Default Database: H2 In-Memory Database
+  datasource:
+    url: jdbc:h2:mem:mechanic_buddy_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
+      continue-on-error: true
+
+  # Spring Mail Settings
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: demo.mechanicbuddy@gmail.com
+    password: demoapppassword
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+# JWT Configuration
+app:
+  jwt:
+    secret: 9a2f8c4e6b0d1e3f5a7b9c8d0e2f4a6b8c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f
+    expiration-ms: 86400000 # 24 Hours
+
+# Razorpay Test Mode Credentials (FREE Sandbox)
+razorpay:
+  key-id: rzp_test_MechanicBuddy2026Key
+  key-secret: MechanicBuddyTestSecretKey123
