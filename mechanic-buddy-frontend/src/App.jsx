@@ -10,6 +10,8 @@ import { AdminDashboardPage } from './pages/AdminDashboardPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
 import { BuddyAiModal } from './components/ai/BuddyAiModal';
 
+import { Footer } from './components/common/Footer';
+
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user } = useAuth();
   if (!user) return <Navigate to="/" replace />;
@@ -45,6 +47,8 @@ export function AppContent() {
           } />
         </Routes>
       </main>
+
+      <Footer />
 
       {/* Floating Buddy AI Assistant Button */}
       <button

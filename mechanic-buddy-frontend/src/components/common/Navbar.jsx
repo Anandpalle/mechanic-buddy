@@ -7,11 +7,11 @@ import { MapPin, Search, User, LogOut, Phone, Wrench, ChevronDown } from 'lucide
 export const Navbar = () => {
   const { user, logoutUser } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [selectedCity, setSelectedCity] = useState('Bengaluru');
+  const [selectedCity, setSelectedCity] = useState('Hyderabad');
   const navigate = useNavigate();
   const location = useLocation();
 
-  const cities = ['Bengaluru', 'Delhi NCR', 'Mumbai', 'Hyderabad', 'Pune', 'Chennai', 'Kolkata', 'Ahmedabad'];
+  const cities = ['Hyderabad', 'Bengaluru', 'Delhi NCR', 'Mumbai', 'Pune', 'Chennai', 'Kolkata', 'Ahmedabad'];
 
   const handleDashboardClick = () => {
     if (!user) {
@@ -40,7 +40,7 @@ export const Navbar = () => {
                 <span className="text-xl font-black tracking-tight text-white">
                   MECHANIC<span className="text-orange-500">BUDDY</span>
                 </span>
-                <span className="text-[10px] tracking-widest text-gray-400 font-bold uppercase">Car Care & Breakdown</span>
+                <span className="text-[10px] tracking-widest text-orange-400/90 font-bold uppercase">Your Trusted Roadside Partner</span>
               </div>
             </Link>
 
@@ -75,11 +75,11 @@ export const Navbar = () => {
           <div className="flex items-center gap-4 text-xs font-extrabold">
             
             <a
-              href="tel:1800-BUDDY-CARE"
+              href="tel:8106015712"
               className="hidden lg:flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-full font-black shadow transition"
             >
               <Phone className="w-4 h-4" />
-              <span>1800-BUDDY-CARE</span>
+              <span>+91 8106015712</span>
             </a>
 
             {user ? (

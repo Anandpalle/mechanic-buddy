@@ -14,9 +14,9 @@ export const HomePage = () => {
   const navigate = useNavigate();
 
   const demoMechanics = [
-    { id: 1, workshopName: 'Apex Auto Care & Towing', address: 'Sector 14 Ring Road', hourlyRate: 499, rating: 4.8, latitude: 12.9716, longitude: 77.5946 },
-    { id: 2, workshopName: 'Express Moto & Battery Service', address: 'Block B Tech Park', hourlyRate: 399, rating: 4.6, latitude: 12.9850, longitude: 77.6050 },
-    { id: 3, workshopName: 'Priya EV & Hybrid Care', address: 'MG Road Expressway', hourlyRate: 699, rating: 4.9, latitude: 12.9620, longitude: 77.5800 }
+    { id: 1, workshopName: 'Apex Auto Care & Towing', address: 'HITECH City Main Road, Hyderabad', hourlyRate: 499, rating: 4.8, latitude: 17.4435, longitude: 78.3772 },
+    { id: 2, workshopName: 'Express Moto & Battery Service', address: 'Banjara Hills Road No 12, Hyderabad', hourlyRate: 399, rating: 4.6, latitude: 17.4156, longitude: 78.4347 },
+    { id: 3, workshopName: 'Priya EV & Hybrid Care', address: 'Jubilee Hills Checkpost, Hyderabad', hourlyRate: 699, rating: 4.9, latitude: 17.4319, longitude: 78.4071 }
   ];
 
   const serviceTiles = [
