@@ -27,35 +27,35 @@ export const AdminDashboardPage = () => {
     <div className="max-w-7xl mx-auto px-4 lg:px-8 py-8 space-y-8">
       
       {/* Admin Header Banner */}
-      <div className="glass-card rounded-2xl p-6 border border-purple-500/30 flex items-center justify-between">
+      <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm flex items-center justify-between">
         <div>
-          <span className="text-xs font-semibold text-purple-400 uppercase tracking-wider">System Administration</span>
-          <h1 className="text-2xl font-bold text-white mt-1">Platform Control & Analytics Center</h1>
-          <p className="text-xs text-gray-400 mt-1">Manage Mechanics, Users, Service Dispatch, and Platform Revenues</p>
+          <span className="text-xs font-black text-purple-600 uppercase tracking-wider block mb-1">System Administration</span>
+          <h1 className="text-2xl font-black text-gray-900">Platform Control & Analytics Center</h1>
+          <p className="text-xs font-medium text-gray-600 mt-1">Manage Mechanics, Users, Service Dispatch, and Platform Revenues</p>
         </div>
-        <div className="w-12 h-12 rounded-2xl bg-purple-600/20 text-purple-400 flex items-center justify-center border border-purple-500/30">
+        <div className="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-200 shrink-0">
           <Shield className="w-6 h-6" />
         </div>
       </div>
 
       {/* Analytics Graphs & Pie Charts */}
-      <div>
-        <h2 className="text-xl font-bold text-white mb-4">Platform Analytics (Visual Representation)</h2>
+      <div className="space-y-4">
+        <h2 className="text-lg font-black text-gray-900 uppercase tracking-tight">Platform Analytics (Visual Representation)</h2>
         <AnalyticsCharts />
       </div>
 
       {/* Registered Mechanics List */}
-      <div>
-        <h2 className="text-lg font-bold text-white mb-4">Verified Mechanics & Garages ({mechanics.length})</h2>
+      <div className="space-y-4">
+        <h2 className="text-lg font-black text-gray-900 uppercase tracking-tight">Verified Mechanics & Garages ({mechanics.length})</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {mechanics.map((m) => (
-            <div key={m.id} className="glass-card rounded-2xl p-4 border border-white/10 flex items-center justify-between">
+            <div key={m.id} className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm flex items-center justify-between">
               <div>
-                <h3 className="font-bold text-white text-sm">{m.workshopName || m.user?.name}</h3>
-                <p className="text-xs text-gray-400">{m.address}</p>
-                <p className="text-xs text-indigo-400 mt-1">Rating: ★ {m.rating} | Rate: ₹{m.hourlyRate}/hr</p>
+                <h3 className="font-extrabold text-gray-900 text-sm">{m.workshopName || m.user?.name}</h3>
+                <p className="text-xs font-semibold text-gray-500">{m.address}</p>
+                <p className="text-xs font-bold text-orange-600 mt-1">Rating: ★ {m.rating || 4.8} | Hourly Rate: ₹{m.hourlyRate}/hr</p>
               </div>
-              <span className="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-xl border border-emerald-500/30">
+              <span className="px-3 py-1 bg-emerald-50 text-emerald-600 text-xs font-black rounded-lg border border-emerald-200">
                 ACTIVE
               </span>
             </div>

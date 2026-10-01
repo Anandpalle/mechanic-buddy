@@ -13,7 +13,7 @@ services:
 
   # React Frontend Static Site
   - type: web
-    name: mechanic-buddy-frontend
+    name: mechanic-buddy
     runtime: static
     buildCommand: cd mechanic-buddy-frontend && npm install && npm run build
     staticPublishPath: ./mechanic-buddy-frontend/dist

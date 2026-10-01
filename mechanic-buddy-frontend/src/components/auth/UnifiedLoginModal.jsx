@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { authApi } from '../../api/authApi';
 import { Wrench, Shield, Lock, Mail, User, Phone, CheckCircle2, AlertCircle, ArrowRight, Sparkles } from 'lucide-react';
 
-export const UnifiedLoginModal = ({ isOpen, onClose, defaultMode = 'login' }) => {
+export const UnifiedLoginModal = ({ isOpen, onClose, defaultMode = 'login', defaultRole = 'ROLE_CUSTOMER' }) => {
   const { loginUser } = useAuth();
+  const navigate = useNavigate();
   const [isRegister, setIsRegister] = useState(defaultMode === 'register');
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: defaultRole === 'ROLE_ADMIN' ? 'admin@mechanicbuddy.com' : defaultRole === 'ROLE_MECHANIC' ? 'mechanic@mechanicbuddy.com' : 'customer@mechanicbuddy.com',
+    password: defaultRole === 'ROLE_ADMIN' ? 'admin123' : defaultRole === 'ROLE_MECHANIC' ? 'mechanic123' : 'customer123',
     name: '',
     phone: '',
-    role: 'ROLE_CUSTOMER',
+    role: defaultRole,
     workshopName: '',
   });
   const [loading, setLoading] = useState(false);
@@ -19,6 +21,13 @@ export const UnifiedLoginModal = ({ isOpen, onClose, defaultMode = 'login' }) =>
   const [success, setSuccess] = useState('');
 
   if (!isOpen) return null;
+
+  const handleRedirect = (role) => {
+    const roleStr = String(role);
+    if (roleStr.includes('ADMIN')) navigate('/admin');
+    else if (roleStr.includes('MECHANIC')) navigate('/mechanic-dashboard');
+    else navigate('/dashboard');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,13 +40,19 @@ export const UnifiedLoginModal = ({ isOpen, onClose, defaultMode = 'login' }) =>
         const res = await authApi.register(formData);
         loginUser(res.data);
         setSuccess(`Account created! Welcome, ${res.data.name}. Redirecting...`);
-        setTimeout(() => { onClose(); }, 1200);
+        setTimeout(() => {
+          onClose();
+          handleRedirect(res.data.role);
+        }, 800);
       } else {
         const res = await authApi.login(formData.email, formData.password);
         loginUser(res.data);
-        const roleLabel = res.data.role === 'ROLE_ADMIN' ? 'Administrator' : res.data.role === 'ROLE_MECHANIC' ? 'Mechanic Partner' : 'Customer';
-        setSuccess(`Authenticated as ${roleLabel}! Redirecting...`);
-        setTimeout(() => { onClose(); }, 1200);
+        const roleLabel = String(res.data.role).includes('ADMIN') ? 'Administrator' : String(res.data.role).includes('MECHANIC') ? 'Mechanic Partner' : 'Customer';
+        setSuccess(`Authenticated as ${roleLabel}! Redirecting to console...`);
+        setTimeout(() => {
+          onClose();
+          handleRedirect(res.data.role);
+        }, 800);
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Authentication failed. Please verify credentials.');

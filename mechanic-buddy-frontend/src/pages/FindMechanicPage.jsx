@@ -26,7 +26,7 @@ export const FindMechanicPage = () => {
 
   const fetchMechanics = async () => {
     try {
-      const res = await mechanicApi.getNearbyMechanics(12.9716, 77.5946);
+      const res = await mechanicApi.getNearbyMechanics(17.4435, 78.3772);
       setMechanics(res.data);
     } catch (err) {
       console.error('Failed to fetch mechanics', err);
@@ -53,9 +53,9 @@ export const FindMechanicPage = () => {
         vehicleModel,
         vehicleType,
         issueDescription,
-        latitude: 12.9716,
-        longitude: 77.5946,
-        address: 'MG Road Expressway, Bengaluru',
+        latitude: 17.4435,
+        longitude: 78.3772,
+        address: 'HITECH City Main Road, Hyderabad',
         estimatedCost: selectedMechanic?.hourlyRate ? selectedMechanic.hourlyRate + 150 : 650.0
       });
       setBookingSuccess(res.data);
@@ -88,7 +88,7 @@ export const FindMechanicPage = () => {
           email: user?.email,
           contact: user?.phone
         },
-        theme: { color: '#6366f1' }
+        theme: { color: '#ea580c' }
       };
 
       if (window.Razorpay) {
@@ -106,56 +106,80 @@ export const FindMechanicPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 lg:px-8 py-10 space-y-10">
+    <div className="max-w-7xl mx-auto px-4 lg:px-8 py-8 space-y-8">
       
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      {/* Header Banner */}
+      <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-bold text-emerald-400 uppercase tracking-widest block mb-1">GPS Radar Active</span>
-          <h1 className="text-3xl font-extrabold text-white flex items-center gap-2">
-            <MapPin className="w-8 h-8 text-emerald-400" />
+          <span className="text-xs font-black text-orange-600 uppercase tracking-wider block mb-1">
+            GPS Radar Active • Hyderabad Region
+          </span>
+          <h1 className="text-2xl font-black text-gray-900 flex items-center gap-2">
+            <MapPin className="w-6 h-6 text-orange-600" />
             Verified Nearby Roadside Mechanics
           </h1>
-          <p className="text-xs text-gray-400 mt-1">Interactive location map of verified emergency mobile repair units</p>
+          <p className="text-xs font-medium text-gray-600 mt-1">
+            Interactive location map of verified emergency mobile repair units & garages in Hyderabad.
+          </p>
+        </div>
+
+        <a
+          href="tel:8106015712"
+          className="px-4 py-2.5 bg-orange-600 hover:bg-orange-700 text-white font-black text-xs rounded-xl shadow transition flex items-center gap-2 shrink-0 self-start md:self-auto"
+        >
+          <Phone className="w-4 h-4" />
+          <span>Call Helpline: +91 8106015712</span>
+        </a>
+      </div>
+
+      {/* Interactive Map Container */}
+      <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm space-y-3">
+        <div className="flex items-center justify-between px-2">
+          <h2 className="text-sm font-black text-gray-900 uppercase">Live Map View</h2>
+          <span className="text-[10px] font-black text-orange-600 bg-orange-50 px-2 py-0.5 rounded">Hyderabad, Telangana</span>
+        </div>
+        <div className="rounded-xl overflow-hidden border border-gray-200 shadow-inner">
+          <MechanicMap mechanics={mechanics} onBookMechanic={handleBookClick} />
         </div>
       </div>
 
-      {/* Interactive Map */}
-      <div className="gradient-border-glow rounded-3xl overflow-hidden shadow-2xl">
-        <MechanicMap mechanics={mechanics} onBookMechanic={handleBookClick} />
-      </div>
-
       {/* Mechanics Grid */}
-      <div>
-        <h2 className="text-xl font-bold text-white mb-6">Available Mechanics ({mechanics.length})</h2>
+      <div className="space-y-4">
+        <h2 className="text-lg font-black text-gray-900 uppercase tracking-tight">
+          Available Mobile Units ({mechanics.length})
+        </h2>
+        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {mechanics.map((m) => (
-            <div key={m.id} className="glass-card glass-card-hover rounded-3xl p-6 border border-white/10 flex flex-col justify-between relative overflow-hidden group">
+            <div key={m.id} className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm hover:shadow-md hover:border-orange-500 transition flex flex-col justify-between group">
               
               <div>
                 <div className="flex items-start justify-between mb-3">
                   <div>
-                    <h3 className="font-extrabold text-white text-base group-hover:text-indigo-400 transition">{m.workshopName || m.user?.name}</h3>
-                    <p className="text-xs text-gray-400 mt-0.5">{m.address}</p>
+                    <h3 className="font-extrabold text-gray-900 text-base group-hover:text-orange-600 transition">
+                      {m.workshopName || m.user?.name}
+                    </h3>
+                    <p className="text-xs font-semibold text-gray-500 mt-0.5">{m.address}</p>
                   </div>
-                  <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1 shrink-0">
-                    <Star className="w-3.5 h-3.5 fill-emerald-400 text-emerald-400" /> {m.rating || 4.8}
+                  <span className="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-orange-50 text-orange-600 border border-orange-200 flex items-center gap-1 shrink-0">
+                    <Star className="w-3.5 h-3.5 fill-orange-500 text-orange-500" /> {m.rating || 4.8}
                   </span>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-gray-950/60 border border-white/5 mb-4 text-xs text-indigo-300 font-medium">
-                  Specializations: <span className="text-gray-300">{m.specializations || 'General Repairs, Flat Tire, Towing'}</span>
+                <div className="p-3 rounded-xl bg-slate-50 border border-gray-100 mb-4 text-xs font-semibold text-gray-700">
+                  <span className="text-gray-500 font-bold block text-[10px] uppercase mb-0.5">Specializations:</span>
+                  <span>{m.specializations || 'General Repairs, Flat Tire, Towing'}</span>
                 </div>
 
-                <div className="text-sm font-extrabold text-white mb-5 flex items-center justify-between">
-                  <span className="text-xs text-gray-400 uppercase">Hourly Rate:</span>
-                  <span className="text-emerald-400 text-base">₹{m.hourlyRate}/hr</span>
+                <div className="text-sm font-extrabold text-gray-900 mb-5 flex items-center justify-between">
+                  <span className="text-xs text-gray-500 font-semibold uppercase">Hourly Rate:</span>
+                  <span className="text-orange-600 font-black text-base">₹{m.hourlyRate}/hr</span>
                 </div>
               </div>
 
               <button
                 onClick={() => handleBookClick(m)}
-                className="w-full py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 transition duration-300"
+                className="w-full py-2.5 px-4 bg-[#0B132B] hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow transition duration-200 flex items-center justify-center gap-2"
               >
                 <Wrench className="w-4 h-4" />
                 Book Emergency Assistance
@@ -167,21 +191,21 @@ export const FindMechanicPage = () => {
 
       {/* Booking & Razorpay Modal */}
       {bookingModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-xl p-4">
-          <div className="relative w-full max-w-lg glass-card rounded-3xl p-7 border border-white/15 shadow-2xl">
-            <button onClick={() => { setBookingModalOpen(false); setBookingSuccess(null); }} className="absolute top-5 right-5 text-gray-400 hover:text-white">✕</button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+          <div className="relative w-full max-w-lg bg-white rounded-3xl p-7 border border-gray-200 shadow-2xl">
+            <button onClick={() => { setBookingModalOpen(false); setBookingSuccess(null); }} className="absolute top-5 right-5 text-gray-400 hover:text-gray-900 font-bold text-lg">✕</button>
 
             {!bookingSuccess ? (
               <form onSubmit={handleCreateBooking} className="space-y-4">
-                <h3 className="text-xl font-bold text-white">Book Emergency Assistance</h3>
-                <p className="text-xs text-gray-400">Target Mechanic: <strong className="text-indigo-400">{selectedMechanic?.workshopName}</strong></p>
+                <h3 className="text-xl font-black text-gray-900">Book Emergency Assistance</h3>
+                <p className="text-xs font-semibold text-gray-600">Assigned Mechanic: <strong className="text-orange-600">{selectedMechanic?.workshopName}</strong></p>
 
                 <div>
-                  <label className="block text-xs font-bold text-gray-300 uppercase mb-1">Vehicle Category</label>
+                  <label className="block text-xs font-black text-gray-700 uppercase mb-1">Vehicle Category</label>
                   <select
                     value={vehicleType}
                     onChange={(e) => setVehicleType(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl glass-input text-sm bg-gray-900"
+                    className="w-full px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-sm font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
                   >
                     <option value="Car">Car / SUV</option>
                     <option value="Bike">Motorcycle / Scooter</option>
@@ -191,36 +215,36 @@ export const FindMechanicPage = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-gray-300 uppercase mb-1">Vehicle Make & Model</label>
+                  <label className="block text-xs font-black text-gray-700 uppercase mb-1">Vehicle Make & Model</label>
                   <input
                     type="text"
                     required
                     value={vehicleModel}
                     onChange={(e) => setVehicleModel(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl glass-input text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-sm font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-gray-300 uppercase mb-1">Describe Breakdown Situation</label>
+                  <label className="block text-xs font-black text-gray-700 uppercase mb-1">Describe Breakdown Situation</label>
                   <textarea
                     rows={3}
                     required
                     value={issueDescription}
                     onChange={(e) => setIssueDescription(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl glass-input text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-sm font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
                   ></textarea>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-indigo-950/50 border border-indigo-500/40 flex items-center justify-between text-xs">
-                  <span className="text-gray-300 font-bold uppercase">Estimated Service Cost:</span>
-                  <span className="text-emerald-400 font-black text-base">₹{selectedMechanic?.hourlyRate ? selectedMechanic.hourlyRate + 150 : 650.0}</span>
+                <div className="p-4 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-between text-xs">
+                  <span className="text-gray-800 font-extrabold uppercase">Estimated Service Cost:</span>
+                  <span className="text-orange-600 font-black text-base">₹{selectedMechanic?.hourlyRate ? selectedMechanic.hourlyRate + 150 : 650.0}</span>
                 </div>
 
                 <button
                   type="submit"
                   disabled={bookingLoading}
-                  className="w-full py-3.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 text-white font-extrabold rounded-xl text-sm shadow-xl flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-[#0B132B] hover:bg-orange-600 text-white font-black text-sm rounded-xl shadow transition flex items-center justify-center gap-2"
                 >
                   <Send className="w-4 h-4" />
                   {bookingLoading ? 'Registering Request...' : 'Confirm Breakdown Request'}
@@ -228,26 +252,26 @@ export const FindMechanicPage = () => {
               </form>
             ) : (
               <div className="text-center space-y-5 py-4">
-                <div className="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center mx-auto shadow-lg">
-                  <CheckCircle2 className="w-7 h-7" />
+                <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow">
+                  <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold text-white">Service Request Created!</h3>
-                <p className="text-xs text-gray-400">Request ID: <strong className="text-indigo-400">#{bookingSuccess.id}</strong></p>
+                <h3 className="text-xl font-black text-gray-900">Service Request Created!</h3>
+                <p className="text-xs font-semibold text-gray-600">Request ID: <strong className="text-orange-600">#{bookingSuccess.id}</strong></p>
 
-                <div className="p-4 rounded-2xl bg-gray-950/80 border border-white/10 text-left text-xs space-y-2">
+                <div className="p-4 rounded-xl bg-slate-50 border border-gray-200 text-left text-xs space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Assigned Mechanic:</span>
-                    <span className="text-white font-bold">{selectedMechanic?.workshopName}</span>
+                    <span className="text-gray-600 font-semibold">Assigned Mechanic:</span>
+                    <span className="text-gray-900 font-bold">{selectedMechanic?.workshopName}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Total Amount:</span>
-                    <span className="text-emerald-400 font-extrabold text-sm">₹{bookingSuccess.estimatedCost}</span>
+                    <span className="text-gray-600 font-semibold">Total Amount:</span>
+                    <span className="text-emerald-600 font-black text-sm">₹{bookingSuccess.estimatedCost}</span>
                   </div>
                 </div>
 
                 <button
                   onClick={handleRazorpayPayment}
-                  className="w-full py-3.5 bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-extrabold rounded-xl text-sm shadow-xl flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm rounded-xl shadow transition flex items-center justify-center gap-2"
                 >
                   <CreditCard className="w-5 h-5" />
                   Pay Now via Razorpay (Test Mode)

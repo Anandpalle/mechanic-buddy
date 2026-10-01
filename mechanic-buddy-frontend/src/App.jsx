@@ -23,7 +23,7 @@ export function AppContent() {
   const [aiOpen, setAiOpen] = React.useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen bg-slate-50 text-gray-900 font-sans flex flex-col selection:bg-orange-500 selection:text-white">
       <Navbar />
       <main className="flex-1">
         <Routes>
