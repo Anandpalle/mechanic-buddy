@@ -18,30 +18,26 @@ public class DataInitializer {
                                            MechanicProfileRepository mechanicProfileRepository,
                                            PasswordEncoder passwordEncoder) {
         return args -> {
-            // Seed Admin Account
-            if (!userRepository.existsByEmail("admin@mechanicbuddy.com")) {
-                User admin = User.builder()
-                        .name("System Admin")
-                        .email("admin@mechanicbuddy.com")
-                        .password(passwordEncoder.encode("admin123"))
-                        .phone("+91 8106015712")
-                        .role(Role.ROLE_ADMIN)
-                        .build();
-                userRepository.save(admin);
-                System.out.println("✅ Seeded Admin Account: admin@mechanicbuddy.com / admin123");
-            }
+            // Force seed or update Admin Account
+            User admin = userRepository.findByEmail("admin@mechanicbuddy.com").orElseGet(User::new);
+            admin.setName("System Admin");
+            admin.setEmail("admin@mechanicbuddy.com");
+            admin.setPassword(passwordEncoder.encode("admin123"));
+            admin.setPhone("+91 8106015712");
+            admin.setRole(Role.ROLE_ADMIN);
+            userRepository.save(admin);
+            System.out.println("✅ Forced Admin Account Setup: admin@mechanicbuddy.com / admin123");
 
-            // Seed Mechanic Account
-            if (!userRepository.existsByEmail("mechanic@mechanicbuddy.com")) {
-                User mechanic = User.builder()
-                        .name("Apex Towing & Repair")
-                        .email("mechanic@mechanicbuddy.com")
-                        .password(passwordEncoder.encode("mechanic123"))
-                        .phone("+91 8106015712")
-                        .role(Role.ROLE_MECHANIC)
-                        .build();
-                User savedMechanic = userRepository.save(mechanic);
+            // Force seed or update Mechanic Account
+            User mechanic = userRepository.findByEmail("mechanic@mechanicbuddy.com").orElseGet(User::new);
+            mechanic.setName("Apex Towing & Repair");
+            mechanic.setEmail("mechanic@mechanicbuddy.com");
+            mechanic.setPassword(passwordEncoder.encode("mechanic123"));
+            mechanic.setPhone("+91 8106015712");
+            mechanic.setRole(Role.ROLE_MECHANIC);
+            User savedMechanic = userRepository.save(mechanic);
 
+            if (mechanicProfileRepository.findByUser(savedMechanic).isEmpty()) {
                 MechanicProfile profile = MechanicProfile.builder()
                         .user(savedMechanic)
                         .workshopName("Apex Towing & Mobile Garage")
@@ -53,21 +49,18 @@ public class DataInitializer {
                         .isAvailable(true)
                         .build();
                 mechanicProfileRepository.save(profile);
-                System.out.println("✅ Seeded Mechanic Account: mechanic@mechanicbuddy.com / mechanic123");
             }
+            System.out.println("✅ Forced Mechanic Account Setup: mechanic@mechanicbuddy.com / mechanic123");
 
-            // Seed Customer Account
-            if (!userRepository.existsByEmail("customer@mechanicbuddy.com")) {
-                User customer = User.builder()
-                        .name("Anand Reddy")
-                        .email("customer@mechanicbuddy.com")
-                        .password(passwordEncoder.encode("customer123"))
-                        .phone("+91 8106015712")
-                        .role(Role.ROLE_CUSTOMER)
-                        .build();
-                userRepository.save(customer);
-                System.out.println("✅ Seeded Customer Account: customer@mechanicbuddy.com / customer123");
-            }
+            // Force seed or update Customer Account
+            User customer = userRepository.findByEmail("customer@mechanicbuddy.com").orElseGet(User::new);
+            customer.setName("Anand Reddy");
+            customer.setEmail("customer@mechanicbuddy.com");
+            customer.setPassword(passwordEncoder.encode("customer123"));
+            customer.setPhone("+91 8106015712");
+            customer.setRole(Role.ROLE_CUSTOMER);
+            userRepository.save(customer);
+            System.out.println("✅ Forced Customer Account Setup: customer@mechanicbuddy.com / customer123");
         };
     }
 }
