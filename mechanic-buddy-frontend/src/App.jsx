@@ -15,7 +15,11 @@ import { Footer } from './components/common/Footer';
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user } = useAuth();
   if (!user) return <Navigate to="/" replace />;
-  if (allowedRoles && !allowedRoles.includes(user.role)) return <Navigate to="/" replace />;
+  if (allowedRoles) {
+    const userRoleStr = String(user.role || '');
+    const isAllowed = allowedRoles.some(r => userRoleStr.includes(r.replace('ROLE_', '')) || userRoleStr === r);
+    if (!isAllowed) return <Navigate to="/" replace />;
+  }
   return children;
 };
 
@@ -31,17 +35,17 @@ export function AppContent() {
           <Route path="/find-mechanic" element={<FindMechanicPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/dashboard" element={
-            <ProtectedRoute allowedRoles={['ROLE_CUSTOMER', 'ROLE_ADMIN']}>
+            <ProtectedRoute allowedRoles={['ROLE_CUSTOMER', 'ROLE_ADMIN', 'CUSTOMER', 'ADMIN']}>
               <CustomerDashboardPage />
             </ProtectedRoute>
           } />
           <Route path="/mechanic-dashboard" element={
-            <ProtectedRoute allowedRoles={['ROLE_MECHANIC', 'ROLE_ADMIN']}>
+            <ProtectedRoute allowedRoles={['ROLE_MECHANIC', 'ROLE_ADMIN', 'MECHANIC', 'ADMIN']}>
               <MechanicDashboardPage />
             </ProtectedRoute>
           } />
           <Route path="/admin" element={
-            <ProtectedRoute allowedRoles={['ROLE_ADMIN']}>
+            <ProtectedRoute allowedRoles={['ROLE_ADMIN', 'ADMIN']}>
               <AdminDashboardPage />
             </ProtectedRoute>
           } />
