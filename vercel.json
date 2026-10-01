@@ -1,0 +1,11 @@
+{
+  "framework": "vite",
+  "buildCommand": "cd mechanic-buddy-frontend && npm install && npm run build",
+  "outputDirectory": "mechanic-buddy-frontend/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
