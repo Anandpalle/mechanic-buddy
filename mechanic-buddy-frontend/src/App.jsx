@@ -4,12 +4,15 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navbar } from './components/common/Navbar';
 import { HomePage } from './pages/HomePage';
 import { FindMechanicPage } from './pages/FindMechanicPage';
+import { ServicesPage } from './pages/ServicesPage';
+import { AboutUsPage } from './pages/AboutUsPage';
+import { ContactPage } from './pages/ContactPage';
+import { FaqPage } from './pages/FaqPage';
 import { CustomerDashboardPage } from './pages/CustomerDashboardPage';
 import { MechanicDashboardPage } from './pages/MechanicDashboardPage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
 import { BuddyAiModal } from './components/ai/BuddyAiModal';
-
 import { Footer } from './components/common/Footer';
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
@@ -33,6 +36,10 @@ export function AppContent() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/find-mechanic" element={<FindMechanicPage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/about" element={<AboutUsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/faq" element={<FaqPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/dashboard" element={
             <ProtectedRoute allowedRoles={['ROLE_CUSTOMER', 'ROLE_ADMIN', 'CUSTOMER', 'ADMIN']}>

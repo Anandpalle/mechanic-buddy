@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { UnifiedLoginModal } from '../auth/UnifiedLoginModal';
-import { MapPin, Search, User, LogOut, Phone, Wrench, ChevronDown, Shield, Car, Settings } from 'lucide-react';
+import { MapPin, Search, User, LogOut, Phone, Wrench, ChevronDown, Shield, Car, Home, Info, HelpCircle, PhoneCall, BarChart3 } from 'lucide-react';
 
 export const Navbar = () => {
   const { user, logoutUser } = useAuth();
@@ -16,6 +16,16 @@ export const Navbar = () => {
   const location = useLocation();
 
   const cities = ['Hyderabad', 'Bengaluru', 'Delhi NCR', 'Mumbai', 'Pune', 'Chennai', 'Kolkata', 'Ahmedabad'];
+
+  const navLinks = [
+    { path: '/', label: 'Home' },
+    { path: '/find-mechanic', label: 'Find Mechanics' },
+    { path: '/services', label: 'Services' },
+    { path: '/about', label: 'About Us' },
+    { path: '/contact', label: 'Contact Us' },
+    { path: '/faq', label: 'FAQ' },
+    { path: '/analytics', label: 'Analytics' },
+  ];
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -185,6 +195,38 @@ export const Navbar = () => {
           </div>
 
         </div>
+
+        {/* Secondary Sub-Navigation Bar */}
+        <div className="bg-[#1C2541]/90 border-t border-gray-800/80 px-4 lg:px-8 py-2 overflow-x-auto">
+          <div className="max-w-7xl mx-auto flex items-center gap-6 text-xs font-bold whitespace-nowrap">
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.path;
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`transition-colors py-1 border-b-2 ${
+                    isActive
+                      ? 'text-orange-400 border-orange-500 font-extrabold'
+                      : 'text-gray-300 border-transparent hover:text-white hover:border-gray-500'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+
+            {user && (
+              <button
+                onClick={handleDashboardClick}
+                className="ml-auto text-orange-400 hover:text-orange-300 font-black flex items-center gap-1 bg-orange-500/10 px-3 py-1 rounded-md border border-orange-500/30"
+              >
+                <span>My Dashboard →</span>
+              </button>
+            )}
+          </div>
+        </div>
+
       </header>
 
       <UnifiedLoginModal 
